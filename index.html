@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!-- 宣告使用 HTML5；DOCTYPE 是文件類型宣告，不需要結束標籤。 -->
+<html lang="zh-Hant">
+<!-- html 包住整份文件；lang="zh-Hant" 表示主要使用繁體中文。 -->
+<head>
+    <!-- head 放網頁資訊；這些資訊不會直接成為頁面中的報導文字。 -->
+    <meta charset="UTF-8">
+    <!-- UTF-8 可正確處理中文；meta 是空元素，不寫結束標籤。 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- viewport 讓行動裝置使用裝置寬度；不代表固定寬度的圖片會自動縮小。 -->
+    <meta name="description" content="走進台中市役所，認識百年歷史、巴洛克建築與藝文空間，透過景點清單、有框表格、照片、影片與 Google 地圖閱讀城市故事。">
+    <!-- description 提供網頁摘要；author 標示作者。 -->
+    <meta name="author" content="HTML 課程學生本人">
+    <!-- robots 表達索引意圖；本機檔案不會因此自動被搜尋引擎收錄。 -->
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph 提供分享摘要，不是搜尋排名保證。 -->
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_TW">
+    <meta property="og:title" content="台中市役所報導｜百年巴洛克建築之美">
+    <meta property="og:description" content="認識台中市役所的歷史與建築，搭配空間表格、照片、影片及位置地圖。">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Taichung_City_Hall_Building_2018.jpg/800px-Taichung_City_Hall_Building_2018.jpg">
+    <meta property="og:image:alt" content="台中市役所建築外觀">
+    <meta property="article:published_time" content="2026-10-07">
+    <meta property="article:modified_time" content="2026-10-21">
+    <!-- 正式上線後，再以真實公開網址加入 canonical 及 og:url；不要使用本機或虛構網址。 -->
+    <title>台中市役所報導｜HW07 CSS 樣式練習</title>
+    <!-- title 顯示在瀏覽器分頁；與 body 中的 h1 用途不同。 -->
+    <!--
+        方法二：style 元素放在 head，集中設定整頁共用樣式。
+        CSS 規則的結構是「選擇器 { 屬性: 值; }」，CSS 註解使用 /* ... */。
+        元素選擇器如 body、h2；類別選擇器如 .video-frame；ID 選擇器如 #tips。
+        方法一的行內樣式，請在本文搜尋「方法一」查看三處示範。
+    -->
+    <style>
+        /* 1. 盒子尺寸與全頁文字：border-box 讓寬度包含內距與框線。 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+            font-size: 17px;
+            line-height: 1.85;
+            color: #263d35;
+            background-color: #f2f4ed;
+        }
+
+        /* 2. 頁首：背景、框線、圓角與內距共同建立報導的視覺層次。 */
+        header {
+            padding: 34px 36px;
+            background-color: #173f35;
+            color: #fffdf5;
+            border-top: 6px solid #c89d56;
+            border-radius: 6px;
+        }
+
+        h1 {
+            margin: 0 0 16px;
+            font-size: 2rem;
+            line-height: 1.4;
+            letter-spacing: 0.04em;
+        }
+
+        header p {
+            margin: 10px 0;
+        }
+
+        small {
+            font-size: 0.85em;
+            font-style: normal;
+        }
+
+        /* 3. 導覽與連結：inline-block 讓連結可設定完整的點選內距。 */
+        nav {
+            margin: 24px 0;
+            padding: 20px 24px;
+            background-color: #e6ecdf;
+            border: 1px solid #cbd5c4;
+            border-radius: 6px;
+        }
+
+        nav h2 {
+            margin-top: 0;
+            padding: 0;
+            border: 0;
+            font-size: 1.1rem;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        nav li {
+            display: inline-block;
+            margin: 4px 6px 4px 0;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #fffdf8;
+            border: 1px solid #cbd5c4;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        a {
+            color: #245c49;
+            text-underline-offset: 4px;
+            overflow-wrap: anywhere;
+        }
+
+        /* 虛擬類別 :hover 表示滑鼠移入；:focus-visible 提供鍵盤焦點提示。 */
+        a:hover {
+            color: #784d1b;
+            text-decoration: underline;
+        }
+
+        a:focus-visible, summary:focus-visible {
+            outline: 3px solid #b37d38;
+            outline-offset: 4px;
+        }
+
+        /* 4. 文章章節與盒子模型：margin 為外距，padding 為內距。 */
+        section, aside {
+            margin: 24px 0;
+            padding: 24px 28px;
+            background-color: #fffdf8;
+            border: 1px solid #d9dfd2;
+            border-radius: 6px;
+        }
+
+        h2 {
+            margin: 0 0 18px;
+            padding-left: 12px;
+            border-left: 4px solid #54765d;
+            font-size: 1.4rem;
+            line-height: 1.5;
+        }
+
+        h3 {
+            margin: 22px 0 10px;
+            font-size: 1.1rem;
+        }
+
+        p {
+            margin: 12px 0;
+        }
+
+        ul, ol {
+            padding-left: 1.6em;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        hr {
+            margin: 26px 0;
+            border: 0;
+            border-top: 1px solid #ccd5c6;
+        }
+
+        /* 5. 表格：以 CSS 框線取代 HW05 的 border="1"。 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+            overflow-wrap: anywhere;
+        }
+
+        caption {
+            margin-bottom: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #becdbb;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        thead {
+            background-color: #e1e9db;
+        }
+
+        tbody th {
+            background-color: #f0f3e9;
+        }
+
+        /* 6. 圖片與嵌入媒體：類別區分影片比例與地圖高度。 */
+        figure {
+            margin: 18px 0;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        figcaption {
+            margin-top: 10px;
+            color: #536359;
+            font-size: 0.85em;
+        }
+
+        iframe {
+            display: block;
+            max-width: 100%;
+            border: 0;
+            border-radius: 4px;
+        }
+
+        .video-frame {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 340px;
+        }
+
+        /* 7. ID 選擇器只設定這個補充區；aside 仍保留原有語意。 */
+        #tips {
+            background-color: #edf0dd;
+            border-left: 5px solid #8b9459;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 32px;
+            padding: 20px 0;
+            border-top: 2px solid #54765d;
+            color: #536359;
+            text-align: center;
+        }
+
+        /* 8. 窄視窗只縮小留白與字級，所有 CSS 仍在同一個 style 元素。 */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 12px;
+                font-size: 16px;
+            }
+
+            header, nav, section, aside {
+                padding: 20px 16px;
+            }
+
+            h1 {
+                font-size: 1.65rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+        第七次作業：一頁式台中市役所報導。
+        本範例延續 HW05 的 HTML 語意結構，加入 CSS 配色、文字與盒子模型。
+        方法一：在個別元素的 style 屬性內寫行內樣式；本頁共有三處示範。
+        方法二：在 head 的 style 元素內集中撰寫共用規則。
+        所有自寫 CSS 都在本 HTML；不載入外部 CSS，不使用 @import 或自寫 JavaScript。
+        YouTube 與 Google 地圖是外部服務，服務內部可能使用自己的 CSS 與 JavaScript。
+        語意元素描述內容用途；本次的視覺外觀由 CSS 決定。
+        註解使用「小於符號、驚嘆號、兩個連字號」開始，並以兩個連字號及大於符號結束。
+        註解不會顯示於網頁，但讀者可從原始碼看見，因此不要放私人資料。
+        使用一致的四個空格縮排；成對標籤都明確寫出結束標籤。
+    -->
+
+    <!-- header 是頁首；id="top" 是下方「回到頁首」連結的目的地。 -->
+    <header id="top">
+        <!-- h1 是本頁主標題；h2 用於各章節，依內容階層選用標題。 -->
+        <h1>台中市役所：百年巴洛克建築的藝文新生命</h1>
+        <p><small>城市走讀 · 歷史建築 · 藝文空間</small></p>
+        <p><strong>從古典紅磚到當代藝文展演，一起閱讀台中的經典建築記憶。</strong></p>
+        
+        <!-- 方法一（1/3）：行內 style 設定焦點 mark 的背景、文字顏色與內距。 -->
+        <p>本期焦點：<mark style="background-color: #f6df9d; color: #3e351c; padding: 2px 6px;">百年歷史與建築美學</mark>，從建築報導延伸到位置地圖。</p>
+        
+        <!-- time 的 datetime 以標準日期格式提供機器可讀的日期。 -->
+        <p>作者：楊晏慈｜報導整理日期：<time datetime="2026-10-21">2026 年 10 月 29 日</time></p>
+        
+        <!-- 方法一（3/3）：行內 style 將這處 small 改為斜體。 -->
+        <p><small style="font-style: italic;">本文為資料整理型報導，非現場採訪紀錄。</small></p>
+    </header>
+
+    <!-- nav 表示導覽區；href="#名稱" 會跳到本頁相同 id 的元素。 -->
+    <nav aria-label="報導目錄">
+        <h2>報導目錄</h2>
+        <ul>
+            <li><a href="#intro">市役所簡介</a></li>
+            <li><a href="#highlights">建築特色與參觀順序</a></li>
+            <li><a href="#table">空間與特色比較表</a></li>
+            <li><a href="#photo">建築外觀照片</a></li>
+            <li><a href="#video">影音報導</a></li>
+            <li><a href="#map">位置地圖</a></li>
+            <li><a href="#tips">參訪小提醒</a></li>
+            <li><a href="#sources">資料來源</a></li>
+        </ul>
+    </nav>
+
+    <!-- hr 表示內容主題的分隔，也是沒有結束標籤的空元素。 -->
+    <hr>
+
+    <!-- main 包住本頁主要內容；article 表示可獨立閱讀的完整報導。 -->
+    <main id="main-content">
+        <!-- article 收納可獨立理解的報導；section 是這篇報導的主題章節。 -->
+        <article aria-label="台中市役所專題報導">
+            
+            <section id="intro">
+                <h2>一、市役所簡介</h2>
+                <p>
+                    台中市役所位於台中市西區，自 <strong>1911 年</strong>落成啟用以來，
+                    見證了日治時期至今的城市行政與歷史變遷。建築結合了西方古典主義與巴洛克裝飾風格，
+                    是台中現存歷史最悠久的洋風磚造辦公廳舍之一。
+                </p>
+                <p>
+                    館內最具代表性的特色為其優雅的<strong>古典圓頂</strong>與紅磚拱廊建築。
+                    經歷多次修復與活化後，市役所轉型為結合當代藝術展覽、文創選品與餐飲的藝文空間，
+                    成為舊城區漫遊不可錯過的地標。
+                </p>
+                <p>
+                    從歷史建築的精緻工藝到當代藝文的進駐，台中市役所宛如一座城市的文化櫥窗。
+                    本篇透過空間整理與建議參觀順序，帶領讀者重新認識這座百年建築。
+                </p>
+                <p>市役所地址：台中市西區市府路 97 號。<br>閱讀重點：巴洛克建築、歷史演變與藝文空間。</p>
+            </section>
+
+            <hr>
+            <section id="highlights">
+                <h2>二、建築特色與參觀順序</h2>
+                <h3>值得留意的三個特色</h3>
+                <ul>
+                    <li><strong>古典圓頂：</strong>建築上方的優美圓頂，是欣賞日治洋風建築的視覺焦點。</li>
+                    <li><strong>紅磚拱廊：</strong>立面交織著紅磚與灰白洗石子，展現精緻的古典裝飾工藝。</li>
+                    <li><strong>藝文空間：</strong>活化後的內部空間定期舉辦展覽，讓歷史場域融入當代生活。</li>
+                </ul>
+
+                <h3>建議參觀順序</h3>
+                <!-- 方法一（2/3）：行內 style 提供獨立的左框線與左內距。 -->
+                <p style="border-left: 4px solid #b37d38; padding-left: 14px;">以下是本報導規劃的參觀建議，並非官方指定路線。</p>
+                
+                <ol>
+                    <li>抵達市役所外圍，先觀察其對稱的建築立面與拱廊結構。</li>
+                    <li>走到正面抬頭欣賞其標誌性的古典圓頂與裝飾細節。</li>
+                    <li>進入室內參觀當期的藝文展覽或文創展示空間。</li>
+                    <li>漫步至周邊的舊城區街道，順道走訪鄰近的歷史文化景點。</li>
+                </ol>
+            </section>
+
+            <hr>
+            <section id="table">
+                <h2>三、空間與特色比較表</h2>
+                <!--
+                    table 用於呈現資料，HW06 移除舊式 border 屬性，
+                    改由 style 元素內的 table、th、td 設定框線與內距，並使用 border-collapse。
+                -->
+                <table>
+                    <caption>台中市役所三項核心特色與觀察重點</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">空間項目</th>
+                            <th scope="col">建築與功能特色</th>
+                            <th scope="col">建議觀察重點</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">主體建築</th>
+                            <td>建於 1911 年的市定古蹟</td>
+                            <td>巴洛克圓頂、紅磚拱廊與古典立面細節</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">藝文展區</th>
+                            <td>內部改造之展覽與文創場域</td>
+                            <td>當代藝術展覽及室內空間活化利用</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">周邊街區</th>
+                            <td>緊鄰舊台中州廳等歷史街區</td>
+                            <td>結合舊城區散步路線與歷史紋理</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <hr>
+            <section id="photo">
+                <h2>四、建築外觀照片</h2>
+                <figure>
+                    <img
+                        src="OK_2111_2.jpg"
+                        alt="台中市役所建築外觀"
+                        width="480">
+                    <figcaption>
+                        台中市役所是台中經典的日治時期歷史建築。
+                        圖片來源：<a href="https://commons.wikimedia.org/wiki/File:Taichung_City_Hall_Building_2018.jpg" target="_blank" rel="noopener noreferrer">維基百科（CC BY-SA 4.0）</a>。
+                    </figcaption>
+                </figure>
+            </section>
+
+            <hr>
+            <section id="video">
+                <h2>五、影音報導</h2>
+                <p>透過下方影片認識台中市役所的建築之美與歷史風貌，再比較影片畫面與本文介紹的內容。</p>
+                <figure>
+                    <iframe
+                        class="video-frame"
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/lvIcEsJktVo"
+                        title="台中市役所建築與歷史介紹影片"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    <figcaption>影片：台中市役所與舊城區歷史建築巡禮。</figcaption>
+                </figure>
+                <p><small>影片為外部作者發布的景點介紹，現場開放與展覽狀況請以最新官方公告為準。</small></p>
+            </section>
+
+            <section id="map">
+                <h2>六、位置地圖：找到台中市役所</h2>
+                <p>台中市役所位於台中市西區，地址為<strong>市府路 97 號</strong>。
+                    下方地圖標示本文介紹的市役所位置，方便讀者對照建築與周邊街道。</p>
+                <iframe
+                    class="map-frame"
+                    src="https://maps.google.com/maps?q=24.1419,120.6798&amp;z=16&amp;output=embed"
+                    width="480"
+                    height="360"
+                    title="台中市役所位置 Google 地圖"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%BD%B9%E6%89%80" target="_blank" rel="noopener noreferrer">在 Google 地圖開啟台中市役所（另開分頁）</a></p>
+                <p><small>位置查詢由 Google 地圖提供；抵達後請依現場指標確認出入口與參觀動線。</small></p>
+            </section>
+
+            <hr>
+            <aside id="tips" aria-labelledby="tips-title">
+                <h2 id="tips-title">參訪小提醒</h2>
+                <details open>
+                    <summary>出發前與參訪時，記得這三件事</summary>
+                    <ul>
+                        <li>出發前可先查詢當期展覽開放時間與休館日。</li>
+                        <li>在室內古蹟參觀請輕聲細語，並遵守場館攝影與飲食規範。</li>
+                        <li>以文字或相片記錄建築細節，感受舊城區的歷史氛圍。</li>
+                    </ul>
+                </details>
+            </aside>
+
+            <hr>
+            <section id="sources">
+                <h2>七、資料來源</h2>
+                <p>本報導依下列資料整理，參觀順序與觀察建議由作者規劃。</p>
+                <ul>
+                    <li><a href="https://www.tchac.taichung.gov.tw/" target="_blank" rel="noopener noreferrer">臺中市文化資產處：台中市役所相關介紹</a></li>
+                    <li><a href="https://commons.wikimedia.org/wiki/File:Taichung_City_Hall_Building_2018.jpg" target="_blank" rel="noopener noreferrer">維基百科：台中市役所影像資料</a></li>
+                </ul>
+                <p><small>資料整理日期：2026 年 10 月 29 日。</small></p>
+            </section>
+        </article>
+    </main>
+
+    <hr>
+    <footer>
+        <p><strong>第七次作業｜台中市役所報導</strong></p>
+        <p><small>作者： 楊晏慈 · 更新日期：2026 年 10 月 29 日</small></p>
+        <p><small>文字依來源整理；照片與影片權利屬原作者。</small></p>
+        <p><a href="#top">回到頁首</a></p>
+    </footer>
+</body>
+</html>
